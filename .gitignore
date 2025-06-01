@@ -1,0 +1,43 @@
+# Node.js
+node_modules/
+dist/
+.env.local
+.next/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# FastAPI logs
+*.log
+
+# Env config
+.env
+.env.*
+
+# Docker
+*.pid
+*.sock
+
+# Mac OS
+.DS_Store
+
+# VS Code/JetBrains
+.vscode/
+.idea/
+
+# Coverage & testing
+coverage/
+htmlcov/
+.cache/
+
+# Output files
+*.zip
+*.pdf
+*.db
+
+# Local-only folders
+shared/__pycache__/
