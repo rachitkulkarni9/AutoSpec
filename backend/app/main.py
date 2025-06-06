@@ -15,10 +15,10 @@ supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
 app = FastAPI()
 
-# Allow CORS for local frontend testing
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Set to your frontend domain in production
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -52,7 +52,6 @@ async def upload_prd(
 
     file_ext = allowed_types[file.content_type]
 
-    # If it's a zip, extract and validate
     if file_ext == "zip":
         try:
             with zipfile.ZipFile(file.file) as zf:
@@ -71,7 +70,6 @@ async def upload_prd(
     else:
         prd_bytes = content
 
-    # Upload to Supabase Storage
     storage_path = f"{user_id}/{str(uuid.uuid4())}.{file_ext}"
     try:
         supabase.storage.from_("prd-files").upload(
@@ -82,10 +80,8 @@ async def upload_prd(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
-    # Construct file URL
     file_url = f"{SUPABASE_URL}/storage/v1/object/public/prd-files/{storage_path}"
 
-    # Insert metadata into Supabase table
     try:
         supabase.table("prds").insert({
             "id": str(uuid.uuid4()),
